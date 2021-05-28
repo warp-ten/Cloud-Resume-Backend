@@ -1,4 +1,4 @@
-<img src="https://cloudresumechallenge.dev/images/logo.png" align="left" alt="drawing" width="70"/>
+<img src="logo.png" align="left" alt="drawing" width="70"/>
 
 # Cloud Resume Challenge  
 
