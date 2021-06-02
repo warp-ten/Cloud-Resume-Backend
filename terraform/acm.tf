@@ -1,9 +1,5 @@
-#################
-## Certificate ##
-#################
-
-# Creates Certificate. 
-# needS to be validated with a hosted zone record
+## ACM Certificate ##
+# Needs a Hosted Zone Record, and ACM Validation Resource to Complete Validation
 resource "aws_acm_certificate" "cert" {
   domain_name       = var.domain_name
   validation_method = "DNS"
@@ -18,7 +14,7 @@ resource "aws_acm_certificate" "cert" {
   }
 }
 
-# Certificate validation record
+## Hosted Zone Record ##
 resource "aws_route53_record" "cert_validation" {
   for_each = {
     for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
@@ -36,7 +32,8 @@ resource "aws_route53_record" "cert_validation" {
   zone_id         = data.aws_route53_zone.resume.zone_id
 }
 
-#This resource represents a successful validatation when completed. (Can take a couple of minutes-hours)
+## ACM Validation ##
+# This resource represents a successful validatation when completed
 resource "aws_acm_certificate_validation" "example" {
   certificate_arn         = aws_acm_certificate.cert.arn
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
