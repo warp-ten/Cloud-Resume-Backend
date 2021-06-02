@@ -1,6 +1,7 @@
-################
-## CloudFront ##
-################
+
+# Identity created to access bucket on behalf of users or extra security
+resource "aws_cloudfront_origin_access_identity" "oai" {
+}
 
 resource "aws_cloudfront_distribution" "resume_dist" {
   origin {
@@ -8,16 +9,14 @@ resource "aws_cloudfront_distribution" "resume_dist" {
     domain_name = aws_s3_bucket.cloud-resume.bucket_regional_domain_name
     origin_id   = var.bucketname
 
-    # You can use an OAI to restrict access to S3. This can be setup so that user can only 
-    # access S3 files through the cloudfront distribution and not through the direct URL.
-    # s3_origin_config {
-    #   origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
-    # }
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.oai.cloudfront_access_identity_path
+    }
   }
 
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = "Some comment"
+  comment             = "Cloud-Resume-Challenge"
   default_root_object = "index.html"
 
 #   logging_config {
@@ -64,10 +63,7 @@ resource "aws_cloudfront_distribution" "resume_dist" {
   }
 }
 
-###############################
 ## Route53 Cloudfront Record ##
-###############################
-
 resource "aws_route53_record" "cloudfront" {
   zone_id = data.aws_route53_zone.resume.zone_id
   name = var.domain_name
