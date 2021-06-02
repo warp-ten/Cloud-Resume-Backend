@@ -8,12 +8,12 @@ Code Review for this Challenge is/was July 31, 2021
 
 ## Instructions 
 
-- [ ] 1. **AWS Certification**  
+- [x] 1. **AWS Certification**  
 - [ ] 2. **HTML** - Resume needs to be written in HTML.  
 - [ ] 3. **CSS** - Resume needs to be styled with CSS.  
-- [ ] 4. **Static S3 Website**  
-- [ ] 5. **HTTPS** - S3 Website URL should use HTTPS  
-- [ ] 6. **DNS** - Custom DNS domain name with CloudFront distribution.  
+- [x] 4. **Static S3 Website** - **(:clipboard:Placeholder for now)**
+- [x] 5. **HTTPS** - S3 Website URL should use HTTPS  
+- [x] 6. **DNS** - Custom DNS domain name with CloudFront distribution.  
 - [ ] 7.  **Javascript** - Include visitor counter  
 - [ ] 8.  **Database** - Store visitor count in a database.  
 - [ ] 9. **API** - Connect web app and database through an API and Lambda.  
