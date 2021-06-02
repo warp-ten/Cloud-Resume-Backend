@@ -11,6 +11,17 @@ provider "aws" {
   region = var.region
 }
 
+# Get data from existing Hosted Zone. 
+# Couldn't figure out how to create hosted zone/domain from scratch in Terraform
+data "aws_route53_zone" "resume" {
+  name         = "xaviercordovajr.com."
+  private_zone = false
+}
+
+##############################
+## S3 Bucket Static Website ##
+##############################
+
 resource "aws_s3_bucket" "cloud-resume" {
   bucket = var.bucketname
   acl    = "public-read"
@@ -49,7 +60,7 @@ resource "aws_s3_bucket_object" "index" {
   depends_on   = [aws_s3_bucket.cloud-resume]
   bucket       = var.bucketname
   key          = "index.html"
-  source       = "./index.html"
+  source       = "../html/index.html"
   acl          = "public-read"
   content_type = "text/html"
 }
@@ -58,7 +69,15 @@ resource "aws_s3_bucket_object" "error" {
   depends_on   = [aws_s3_bucket.cloud-resume]
   bucket       = var.bucketname
   key          = "error.html"
-  source       = "./error.html"
+  source       = "../html/error.html"
   acl          = "public-read"
   content_type = "text/html"
+}
+
+resource "aws_s3_bucket_object" "gif" {
+  depends_on   = [aws_s3_bucket.cloud-resume]
+  bucket       = var.bucketname
+  key          = "yellowranger.gif"
+  source       = "../html/yellowranger.gif"
+  acl          = "public-read"
 }
