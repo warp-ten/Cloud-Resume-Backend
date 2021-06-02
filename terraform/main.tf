@@ -11,21 +11,16 @@ provider "aws" {
   region = var.region
 }
 
-# Get data from existing Hosted Zone. 
-# Couldn't figure out how to create hosted zone/domain from scratch in Terraform
+## Import Hosted Zone Data ##
 data "aws_route53_zone" "resume" {
   name         = "xaviercordovajr.com."
   private_zone = false
 }
 
-##############################
 ## S3 Bucket Static Website ##
-##############################
-
 resource "aws_s3_bucket" "cloud-resume" {
   bucket = var.bucketname
-  acl    = "public-read"
-  #policy = file("policy.json")
+  acl    = "private"
   force_destroy = true
 
   website {
@@ -38,24 +33,34 @@ resource "aws_s3_bucket" "cloud-resume" {
   }
 }
 
-resource "aws_s3_bucket_policy" "getobject" {
-  bucket = aws_s3_bucket.cloud-resume.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Id      = "resume-bucket-policy"
-    Statement = [
-      {
-        Effect    = "Allow"
-        Principal = "*"
-        Action    = "s3:GetObject"
-        Resource = [
-          "${aws_s3_bucket.cloud-resume.arn}/*",
-        ]
-      },
-    ]
-  })
+## Bucket Policy ##
+data "aws_iam_policy_document" "s3_policy" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.cloud-resume.arn}/*"]
+
+    principals {
+      type        = "AWS"
+      identifiers = [aws_cloudfront_origin_access_identity.oai.iam_arn]
+    }
+  }
 }
 
+resource "aws_s3_bucket_policy" "example" {
+  bucket = aws_s3_bucket.cloud-resume.id
+  policy = data.aws_iam_policy_document.s3_policy.json
+}
+
+## Block Public Access ##
+resource "aws_s3_bucket_public_access_block" "block-public" {
+  bucket = aws_s3_bucket.cloud-resume.id
+
+  block_public_acls   = true
+  block_public_policy = true
+  ignore_public_acls  = true
+  restrict_public_buckets = true
+}
+## Bucket Object Uploads ##
 resource "aws_s3_bucket_object" "index" {
   depends_on   = [aws_s3_bucket.cloud-resume]
   bucket       = var.bucketname
