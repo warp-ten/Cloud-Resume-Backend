@@ -4,4 +4,4 @@ description: "Validate terraform files"
 
 runs: 
   using: "docker"
-  image: "../../../Dockerfile"
+  image: "../../../terraform/Dockerfile"
