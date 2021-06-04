@@ -19,8 +19,8 @@ data "aws_route53_zone" "resume" {
 
 ## S3 Bucket Static Website ##
 resource "aws_s3_bucket" "cloud-resume" {
-  bucket = var.bucketname
-  acl    = "private"
+  bucket        = var.bucketname
+  acl           = "private"
   force_destroy = true
 
   website {
@@ -55,9 +55,9 @@ resource "aws_s3_bucket_policy" "example" {
 resource "aws_s3_bucket_public_access_block" "block-public" {
   bucket = aws_s3_bucket.cloud-resume.id
 
-  block_public_acls   = true
-  block_public_policy = true
-  ignore_public_acls  = true
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
   restrict_public_buckets = true
 }
 ## Bucket Object Uploads ##
@@ -80,9 +80,9 @@ resource "aws_s3_bucket_object" "error" {
 }
 
 resource "aws_s3_bucket_object" "gif" {
-  depends_on   = [aws_s3_bucket.cloud-resume]
-  bucket       = var.bucketname
-  key          = "yellowranger.gif"
-  source       = "../html/yellowranger.gif"
-  acl          = "public-read"
+  depends_on = [aws_s3_bucket.cloud-resume]
+  bucket     = var.bucketname
+  key        = "yellowranger.gif"
+  source     = "../html/yellowranger.gif"
+  acl        = "public-read"
 }

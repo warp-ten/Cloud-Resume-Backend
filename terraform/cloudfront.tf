@@ -19,18 +19,18 @@ resource "aws_cloudfront_distribution" "resume_dist" {
   comment             = "Cloud-Resume-Challenge"
   default_root_object = "index.html"
 
-#   logging_config {
-#     include_cookies = false
-#     bucket          = "resume-logs.s3.amazonaws.com"
-#     prefix          = "resume"
-#   }
+  #   logging_config {
+  #     include_cookies = false
+  #     bucket          = "resume-logs.s3.amazonaws.com"
+  #     prefix          = "resume"
+  #   }
 
   aliases = ["xaviercordovajr.com"]
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id   = var.bucketname
+    target_origin_id = var.bucketname
     forwarded_values {
       query_string = false
 
@@ -59,19 +59,19 @@ resource "aws_cloudfront_distribution" "resume_dist" {
 
   viewer_certificate {
     acm_certificate_arn = aws_acm_certificate.cert.arn
-    ssl_support_method = "sni-only"
+    ssl_support_method  = "sni-only"
   }
 }
 
 ## Route53 Cloudfront Record ##
 resource "aws_route53_record" "cloudfront" {
   zone_id = data.aws_route53_zone.resume.zone_id
-  name = var.domain_name
-  type = "A"
+  name    = var.domain_name
+  type    = "A"
 
   alias {
-    name    = aws_cloudfront_distribution.resume_dist.domain_name
-    zone_id = aws_cloudfront_distribution.resume_dist.hosted_zone_id
+    name                   = aws_cloudfront_distribution.resume_dist.domain_name
+    zone_id                = aws_cloudfront_distribution.resume_dist.hosted_zone_id
     evaluate_target_health = false
   }
 }   
