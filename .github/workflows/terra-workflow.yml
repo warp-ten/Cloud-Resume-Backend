@@ -1,0 +1,28 @@
+name: Terraform actions
+
+on: 
+  workflow_dispatch
+
+jobs: 
+  action:
+    defaults:
+      run:
+        working-directory: ../../terraform
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: hashicorp/setup-terrform@v1
+        with:
+          terraform_version: 0.15.0
+
+      - name: terraform-fmt
+        id: fmt
+        run: terraform fmt
+        continue-on-error: true
+
+      - name: terraform-validate
+        id: validate
+        run: terraform validate
