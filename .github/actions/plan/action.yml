@@ -7,4 +7,4 @@ runs:
   image: "../../../terraform/Dockerfile"
   # args: 
   #   - "plan"  
-  entrypoint: [ "ls" ]
+  entrypoint: "ls"
