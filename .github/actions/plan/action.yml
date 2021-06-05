@@ -5,7 +5,4 @@ description: "terraform plan"
 runs: 
   using: "docker"
   image: "../../../terraform/Dockerfile"
-  entrypoint: [ "sh", "-c", ]
-  args: 
-    - "cd /terraform"
-    - "pwd"  
+  entrypoint: "pwd" 
