@@ -5,3 +5,5 @@ description: "Validate terraform files"
 runs: 
   using: "docker"
   image: "../../../terraform/Dockerfile"
+  args: 
+    - "validate"

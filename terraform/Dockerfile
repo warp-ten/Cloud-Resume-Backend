@@ -6,4 +6,4 @@ RUN wget https://releases.hashicorp.com/terraform/0.15.0/terraform_0.15.0_linux_
 
 COPY . .
 
-CMD [ "terraform", "validate" ]
+ENTRYPOINT [ "terraform" ]
