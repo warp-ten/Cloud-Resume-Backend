@@ -9,9 +9,12 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrete.AWS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrete.AWS_SECRET_ACCESS_KEY }}
-      
+
     steps:
       - uses: actions/checkout@v2
 
       - name: validate
         uses: ./.github/actions/validate
+
+      - name: plan
+        uses: ./.github/actions/plan
