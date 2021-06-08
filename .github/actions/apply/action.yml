@@ -1,0 +1,10 @@
+name: "Apply"
+
+description: "Apply terraform plan"
+
+runs: 
+  using: "docker"
+  image: "../../../terraform/Dockerfile"
+  args: 
+    - "apply"
+    - "-auto-approve"
