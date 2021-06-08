@@ -10,8 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: init
+        uses: ./.github/actions/init
+
       - name: validate
         uses: ./.github/actions/validate
 
       - name: plan
         uses: ./.github/actions/plan
+        env:
+          AWS_ACCESS_KEY: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
