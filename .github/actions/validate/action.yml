@@ -1,6 +1,6 @@
 name: "validate"
 
-description: "Validate terraform files"
+description: "Validate Terraform Files"
 
 runs: 
   using: "docker"
