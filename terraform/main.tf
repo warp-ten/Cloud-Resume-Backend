@@ -66,7 +66,7 @@ resource "aws_s3_bucket_object" "index" {
   bucket       = var.bucketname
   key          = "index.html"
   source       = "../html/index.html"
-  acl          = "public-read"
+#  acl          = "public-read"
   content_type = "text/html"
 }
 
@@ -75,7 +75,7 @@ resource "aws_s3_bucket_object" "error" {
   bucket       = var.bucketname
   key          = "error.html"
   source       = "../html/error.html"
-  acl          = "public-read"
+#  acl          = "public-read"
   content_type = "text/html"
 }
 
@@ -84,5 +84,5 @@ resource "aws_s3_bucket_object" "gif" {
   bucket     = var.bucketname
   key        = "yellowranger.gif"
   source     = "../html/yellowranger.gif"
-  acl        = "public-read"
+  #acl        = "public-read"
 }
