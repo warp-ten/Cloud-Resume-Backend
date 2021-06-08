@@ -4,8 +4,7 @@ RUN apk update && apk add wget unzip
 
 RUN wget https://releases.hashicorp.com/terraform/0.15.0/terraform_0.15.0_linux_amd64.zip && unzip /terraform* -d /usr/local/sbin
 
-COPY . .
+#COPY . .
+#WORKDIR /github/workspace/terraform
 
-WORKDIR /github/workspace/terraform
-
-ENTRYPOINT [ "terraform" ]
+ENTRYPOINT [ "terraform", "-chdir=/github/workspace/terraform" ]
