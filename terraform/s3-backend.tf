@@ -2,16 +2,16 @@
 resource "aws_s3_bucket" "terraform-state" {
   bucket = "cloudresume-state"
   acl    = "private"
-  #force_destroy = false
-  lifecycle {
-    prevent_destroy = true
-  }
+  force_destroy = true
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
   tags = {
     Name    = "Terraform-Backend-CloudResume"
     Project = "resume"
   }
   versioning {
-    enabled = true
+    enabled = false
   }
   server_side_encryption_configuration {
     rule {
