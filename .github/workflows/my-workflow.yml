@@ -12,6 +12,10 @@ jobs:
 
       - name: init
         uses: ./.github/actions/init
+        env:
+          AWS_ACCESS_KEY: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
       - name: validate
         uses: ./.github/actions/validate
