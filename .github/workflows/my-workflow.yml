@@ -4,9 +4,8 @@ on:
   workflow_dispatch
 
 jobs:
-  action:
+  Terraform-validate-plan:
     runs-on: ubuntu-latest
-      
     steps:
       - uses: actions/checkout@v2
 
@@ -16,12 +15,22 @@ jobs:
           AWS_ACCESS_KEY: ${{ secrets.AWS_KEY_ID }}
           AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-
       - name: validate
         uses: ./.github/actions/validate
 
       - name: plan
         uses: ./.github/actions/plan
+        env:
+          AWS_ACCESS_KEY: ${{ secrets.AWS_KEY_ID }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  
+  Terraform-apply:
+    needs: [Terraform-validate-plan]
+    runs-on: ubuntu-latest
+    steps:
+          
+      - name: apply
+        uses: ./.github/actions/apply
         env:
           AWS_ACCESS_KEY: ${{ secrets.AWS_KEY_ID }}
           AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
