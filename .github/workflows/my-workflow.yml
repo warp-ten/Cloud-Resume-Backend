@@ -28,7 +28,8 @@ jobs:
     needs: [Terraform-validate-plan]
     runs-on: ubuntu-latest
     steps:
-          
+      - uses: actions/checkout@v2
+       
       - name: apply
         uses: ./.github/actions/apply
         env:
