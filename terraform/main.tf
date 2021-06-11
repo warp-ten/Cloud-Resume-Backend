@@ -60,29 +60,29 @@ resource "aws_s3_bucket_public_access_block" "block-public" {
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
-## Bucket Object Uploads ##
-resource "aws_s3_bucket_object" "index" {
-  depends_on   = [aws_s3_bucket.cloud-resume]
-  bucket       = var.bucketname
-  key          = "index.html"
-  source       = "../html/index.html"
-#  acl          = "public-read"
-  content_type = "text/html"
-}
+# ## Bucket Object Uploads ##
+# resource "aws_s3_bucket_object" "index" {
+#   depends_on   = [aws_s3_bucket.cloud-resume]
+#   bucket       = var.bucketname
+#   key          = "index.html"
+#   source       = "../html/index.html"
+# #  acl          = "public-read"
+#   content_type = "text/html"
+# }
 
-resource "aws_s3_bucket_object" "error" {
-  depends_on   = [aws_s3_bucket.cloud-resume]
-  bucket       = var.bucketname
-  key          = "error.html"
-  source       = "../html/error.html"
-#  acl          = "public-read"
-  content_type = "text/html"
-}
+# resource "aws_s3_bucket_object" "error" {
+#   depends_on   = [aws_s3_bucket.cloud-resume]
+#   bucket       = var.bucketname
+#   key          = "error.html"
+#   source       = "../html/error.html"
+# #  acl          = "public-read"
+#   content_type = "text/html"
+# }
 
-resource "aws_s3_bucket_object" "gif" {
-  depends_on = [aws_s3_bucket.cloud-resume]
-  bucket     = var.bucketname
-  key        = "yellowranger.gif"
-  source     = "../html/yellowranger.gif"
-  #acl        = "public-read"
-}
+# resource "aws_s3_bucket_object" "gif" {
+#   depends_on = [aws_s3_bucket.cloud-resume]
+#   bucket     = var.bucketname
+#   key        = "yellowranger.gif"
+#   source     = "../html/yellowranger.gif"
+#   #acl        = "public-read"
+# }
