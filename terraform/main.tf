@@ -86,3 +86,17 @@ resource "aws_s3_bucket_public_access_block" "block-public" {
 #   source     = "../html/yellowranger.gif"
 #   #acl        = "public-read"
 # }
+
+## Dynamdb ##
+resource "aws_dynamodb_table" "viewcount" {
+  name           = "resume-view-count"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 1
+  write_capacity = 4
+  hash_key       = "count"
+
+  attribute {
+    name = "count"
+    type = "S"
+  }
+}
