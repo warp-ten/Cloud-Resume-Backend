@@ -24,8 +24,8 @@ resource "aws_s3_bucket" "cloud-resume" {
   force_destroy = true
 
   website {
-    index_document = "html/index.html"
-    error_document = "html/error.html"
+    index_document = "index.html"
+    error_document = "error.html"
   }
   tags = {
     Name    = "Cloud-Resume"
