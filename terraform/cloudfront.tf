@@ -17,7 +17,7 @@ resource "aws_cloudfront_distribution" "resume_dist" {
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "Cloud-Resume-Challenge"
-  default_root_object = "index.html"
+  default_root_object = "html/index.html"
 
   #   logging_config {
   #     include_cookies = false

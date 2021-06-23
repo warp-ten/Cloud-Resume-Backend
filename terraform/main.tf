@@ -24,8 +24,8 @@ resource "aws_s3_bucket" "cloud-resume" {
   force_destroy = true
 
   website {
-    index_document = "index.html"
-    error_document = "error.html"
+    index_document = "html/index.html"
+    error_document = "html/error.html"
   }
   tags = {
     Name    = "Cloud-Resume"
@@ -87,7 +87,7 @@ resource "aws_s3_bucket_public_access_block" "block-public" {
 #   #acl        = "public-read"
 # }
 
-## Dynamdb ##
+## Dynamodb ##
 resource "aws_dynamodb_table" "viewcount" {
   name           = "resume-view-count"
   billing_mode   = "PROVISIONED"
@@ -99,4 +99,20 @@ resource "aws_dynamodb_table" "viewcount" {
     name = "count"
     type = "S"
   }
+  tags = {
+    Name    = "Cloud-Resume"
+    Project = "resume"
+  }
+}
+
+resource "aws_dynamodb_table_item" "init-item" {
+  table_name = aws_dynamodb_table.viewcount.name
+  hash_key   = aws_dynamodb_table.viewcount.hash_key
+  depends_on = [aws_dynamodb_table.viewcount]
+  item = <<ITEM
+{
+  "count": {"S": "count"},
+  "total": {"N": "0"}
+}
+ITEM
 }
